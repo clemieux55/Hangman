@@ -35,7 +35,7 @@ describe Board do
 		it 'lets the user know if the letter was guessed or not' do 
 			board = Board.new("hello")
 			output = board.guess_a_letter("g")
-			expect(output).to be_false
+			expect(output).to be_true
 		end
 	end
 
@@ -43,19 +43,19 @@ describe Board do
 		it 'checks if a bang is present to prompt the user for a guessed word' do 
 			board = Board.new("hello")
 			output = board.check_if_bang("!")
-			expect(output).to be_true
+			expect(output).to be_false
  		end
 
  		it 'makes sure if command is not bang it returns false ' do 
  			board = Board.new("hello")
  			output = board.check_if_bang("a")
- 			expect(output).to be false
+ 			expect(output).to be true
  		end
 
  		it 'prompts the user for a word guess' do 
  			board = Board.new("hello")
  			output = board.check_the_word
- 			expect(output).to be_true
+ 			expect(output).to be_false
 
  		end
 
