@@ -1,16 +1,5 @@
-require 'random-word'
 require 'rspec'
-
-class Word
-
-	attr_reader :word
-
-	def get_random_word
-		@word = RandomWord.adjs.next.to_s
-	end
-end
-
-
+require_relative '../word.rb'
 
 describe Word do
 	describe 'it gives an random word' do 
