@@ -1,34 +1,35 @@
 require 'pry'
 require_relative 'word.rb'
-require_relative 'board.rb'
-require_relative 'game_setup.rb'
+require_relative 'hangman.rb'
 
 class Runner
 
-	def play_hangman
-		game = GameSetup.new
-		game.player_number
-		@players = game.get_player_names
-		@board = Board.new(Word.new.get_random_word)
-		
+	def self.play_hangman
+		@hangman = HangMan.new(Word.word)
+		@players = get_players(player_number)
+
 		while true
 			for x in @players do 
-				puts @board.display_board
+				puts @hangman.display_board
 				puts "@players #{x} choose a letter"
 				response = gets.chomp
 				
-				if @board.check_if_bang(response)
-					guess = game.check_the_word(@board.word)
-				elsif guess == true
-					break
-				end
-
-				if @board.already_guessed?(response)	
+				if @hangman.already_guessed?(response)	
 					puts 'Letter already guessed choose another!'
 					redo
 				end
 
-				if @board.guess_a_letter(response) == true
+				if @hangman.check_if_bang(response)
+					puts 'What is your guess'
+					response = gets.chomp
+				elsif @hangman.check_the_word(response)
+					'You won the game!'
+					break
+				else
+					'You loose a turn!'
+				end
+
+				if @hangman.guess_a_letter(response) == true
 					puts 'Letter is correct!'
 				else
 					puts 'letter is incorrect'
@@ -36,7 +37,35 @@ class Runner
 			end
 		end
 	end
+
+	def self.player_number
+		puts 'How many players 1..5 ? :'
+		response = gets.chomp.to_i
+		if (1..5).include?(response)
+			@number = response
+		else
+			player_number
+		end
+	end
+
+	def self.get_players(number)
+		players = []
+		for x in 1..@number
+			puts "Player #{x}'s name: "
+			response = gets.chomp
+			if players.include?(response)
+				puts 'Please pick a unique name: '
+				redo
+			else
+				players = players.shuffle + [response]
+			end
+		end
+	end
 end
 
-runner = Runner.new
-runner.play_hangman
+
+
+
+
+
+Runner.play_hangman

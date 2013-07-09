@@ -1,8 +1,6 @@
-require 'pry'
+class HangMan
 
-class Board
-
-	attr_reader :board, :word
+	attr_reader :hangman, :word
 
 	def initialize(word)
 		@word = word
@@ -12,7 +10,7 @@ class Board
 
 	def set_the_game_board_up
 		length_of_word = @word.length
-		@board = Array.new(length_of_word, "_")
+		@hangman = Array.new(length_of_word, "_")
 	end
 
 	def guess_a_letter(letter)
@@ -45,6 +43,14 @@ class Board
 	def display_board
 		word = "[" + @letters_not_guessed.join() + "]" 
 		@word.gsub(Regexp.new(word),"_")
+	end
+
+	def check_the_word(guess)
+		if guess == @word
+			true
+		else
+			false
+		end
 	end
 end
 
