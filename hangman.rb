@@ -1,6 +1,6 @@
 class HangMan
 
-	attr_reader :hangman, :word
+	attr_reader :word
 
 	def initialize(word)
 		@word = word
@@ -8,9 +8,8 @@ class HangMan
 		@letters_not_guessed = ("a" .. "z").to_a
 	end
 
-	def set_the_game_board_up
-		length_of_word = @word.length
-		@hangman = Array.new(length_of_word, "_")
+	def board
+		@hangman = Array.new(@word.length, "_")
 	end
 
 	def guess_a_letter(letter)
